@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Artificial Shared Mental Models</title>
+        <script src="jspsych/jspsych.js"></script>
+        <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="jspsych/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych/plugins/jspsych-audio-keyboard-response.js"></script>
+        <script src="jspsych/plugins/jspsych-image-button-response.js"></script>
+        <script src="jspsych/plugins/jspsych-video-button-response.js"></script>
+        <script src="jspsych/plugins/jspsych-instructions.js"></script>
+        <script src="jspsych/plugins/jspsych-preload.js"></script>
+        <script src="jspsych/plugins/jspsych-consent.js"></script>
+        <script src="jspsych/plugins/jspsych-trial-of-trials.js"></script>
+        <script src="jspsych/plugins/jspsych-trial-of-trials2.js"></script>
+        <script src="jspsych/plugins/jspsych-trial-of-trials3.js"></script>
+        <script src="jspsych/plugins/jspsych-judgement-feedback.js"></script>
+        <script src="jspsych/plugins/jspsych-final-decision.js"></script>
+        <script src="jspsych/plugins/jspsych-entry-chart.js"></script>
+        <script src="jspsych/plugins/jspsych-entry-chart-theoretical-values.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js"></script>
+        <script src="heatmap.js-master/build/heatmap.js"></script>
+        <script src="jatos.js"></script>
+        <script src="main.js"></script>
+        <link href="jspsych/css/jspsych.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <canvas id="lineChart" height="400" width = "400"></canvas>
+    </body>
+    <script>
+
+        jatos.onLoad(function () {
+            let params = jatos.urlQueryParameters
+            let PROLIFIC_PID = params.PROLIFIC_PID
+            let version = params.version
+            if(version!=null)
+            {
+                version = Number(version)
+                if(isNaN(version))
+                {
+                    console.log('WARNING: version not a number; using a random version')
+                    version=null
+                }
+            }
+
+            submitResults = (results)=>
+            {
+                jatos.submitResultData(results.json(), jatos.startNextComponent)
+            }
+
+            let results = ASMM_Experiment.run(
+                            version=version,
+                            subject_id=PROLIFIC_PID,
+                            handleResults=submitResults)
+        })
+
+    </script>
+</html>

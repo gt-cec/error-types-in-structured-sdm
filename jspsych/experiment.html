@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="jspsych.js"></script>
+		<script src="plugins/jspsych-html-keyboard-response.js"></script>
+		<script src="plugins/jspsych-image-button-response.js"></script>
+		<script src="plugins/jspsych-external-html.js"></script>
+		<link href="css/jspsych.css" rel="stylesheet">
+	</head>
+	<body></body>
+	<script>
+
+		var timeline = [];
+
+		var words = ['Welcome', 'to', 'my', 'experiment'];
+
+		for(var i=0; i<words.length; i++){
+			var welcome_trial = {
+				type: 'html-keyboard-response',
+				stimulus: words[i]
+			}
+			timeline.push(welcome_trial);
+		}
+
+		var image_button_trial = {
+			type: 'image-button-response',
+			stimulus: 'examples/img/gps-low1.jpg',
+			prompt: '<b>How many sattelites are online?</b>',
+			choices: ['<3', '3','4','5','>5'],
+			button_html: '<button class="jspsych-btn">%choice%</button>'
+		}
+
+		timeline.push(image_button_trial);
+
+		console.log('Message')
+
+		jsPsych.init({
+			timeline: timeline,
+			on_finish: function(){
+				jsPsych.data.displayData();
+			}
+		})
+
+	</script>
+</html>
